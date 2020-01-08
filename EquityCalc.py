@@ -37,22 +37,24 @@ def calc_equity(hole, community, iters):
 	for card in community:
 		community_cards.append(eval7.Card(card))
 
+	deck = CalcDeck()
+
+	for card in hole_cards: #remove known cards from deck
+		deck.remove(card)
+	for card in community_cards:
+		deck.remove(card)
+
 	win_count = 0 #init showdown win counter
 
 	for x in range(iters):
-		deck = CalcDeck() #init new deck and shuffle
 		deck.shuffle()
 
-		for card in hole_cards: #remove known cards from deck
-			deck.remove(card)
-		for card in community_cards:
-			deck.remove(card)
-
-		opp_hole = deck.deal(2) #deal opponent's hole
-
 		num_remaining = 5 - len(community) #deal remainder of community cards
-		remaining_comm = deck.deal(num_remaining)
-
+		draw = deck.peek(num_remaining + 2)
+		
+		opp_hole = draw[:2]
+		remaining_comm = draw[2:]
+		
 		player_hand = hole_cards + community_cards + remaining_comm #compile player and opponent hands
 		opp_hand = opp_hole + community_cards + remaining_comm
 
@@ -61,6 +63,7 @@ def calc_equity(hole, community, iters):
 
 		if player_strength > opp_strength: #find winner
 			win_count += 1
+		
 
 	win_prob = win_count / iters
 	return win_prob
@@ -71,10 +74,9 @@ def calc_equity(hole, community, iters):
 
 if __name__ == '__main__':
 	random.seed(1)
-	hole = ['As', 'Ad']
-	community = []
-	print(calc_equity(hole, community, 3000))
-
+	hole = ['Jc', 'Qc']
+	community = ['2c', 'Kd', 'Th', '2s']
+	print(calc_equity(hole, community, 100000))
 	
 
 

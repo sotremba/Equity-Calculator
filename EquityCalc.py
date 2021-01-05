@@ -74,9 +74,9 @@ def calc_equity(hole, community, iters):
 
 if __name__ == '__main__':
 	random.seed(1)
-	hole = ['Jc', 'Qc']
-	community = ['2c', 'Kd', 'Th', '2s']
-	print(calc_equity(hole, community, 100000))
+	hole = ['2c', '5d']
+	community = []
+	print('\nHole: {}, Board: {}, Strength: {}\n'.format(str(hole), str(community), calc_equity(hole, community, 1000)))
 	
 
 

@@ -46,7 +46,7 @@ def calc_equity(hole, community, iters):
 
 	win_count = 0 #init showdown win counter
 
-	for x in range(iters):
+	for _ in range(iters):
 		deck.shuffle()
 
 		num_remaining = 5 - len(community) #deal remainder of community cards
